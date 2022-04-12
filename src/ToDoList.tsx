@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
 // const ToDoList = () => {
 //   const [toDo, setToDo] = useState("");
@@ -28,25 +29,75 @@ import { useForm } from 'react-hook-form';
 //   );
 // };
 // export default ToDoList;
-
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+`;
+const AlertError = styled.span`
+  color: red;
+  font-size: 5px;
+  font-weight: bold;
+`;
+const InputInform = styled.input`
+  margin: 10px 0;
+`;
+interface IForm {
+  Email: string;
+  FirstName: string;
+  LastName: string;
+  Username: string;
+  Password: string;
+  Password1: string;
+}
 const ToDoList = () => {
-  const {register, handleSubmit, formState} = useForm();
-  const onValid = (data: any) => {
+  const {register, handleSubmit, formState:{errors}} = useForm<IForm>({defaultValues: {Email: '@naver.com'}});
+  const onValid = (data: IForm) => {
     console.log(data);
   }
-  console.log(formState.errors);
+  console.log(errors);
   return (
-    <div>
-      <form style={{display: 'flex' ,flexDirection: 'column'}} onSubmit={handleSubmit(onValid, () => console.log('Invalid'))}>
-        <input {...register('Email', {required: true})} placeholder='Email' />
-        <input {...register('First Name', {required: true})} placeholder='First Name' />
-        <input {...register('Last Name', {required: true})} placeholder='Last Name' />
-        <input {...register('Username', {required: true, minLength: 10})} placeholder='Username' />
-        <input {...register('Password', {required: true, minLength: 5})} placeholder='Password' />
-        <input {...register('Password1', {required: "Passworid is Required", minLength: {value: 5, message: 'Your password is too short'}})} placeholder='Password1' />
-        <button>Add</button>
-      </form>
-    </div>
+    <Container>
+      <Form onSubmit={handleSubmit(onValid, () => console.log('Invalid'))} autoComplete="off">
+        <InputInform
+          {...register('Email', {required: 'Email is required', pattern: {value: /^[A-Za-z0-9._%+-]+@naver.com$/gm, message: 'Only naver.com emails allowed' }})} 
+          placeholder='Email' />
+        <AlertError>
+          {errors.Email?.message}
+        </AlertError>
+        <InputInform
+          {...register('FirstName', {required: 'First Name is required'})}  
+          placeholder='First Name' />
+        <AlertError>
+          {errors.FirstName?.message}
+        </AlertError>
+        <InputInform {...register('LastName', {required: 'Last Name is required'})} 
+          placeholder='Last Name' />
+        <AlertError>
+          {errors.LastName?.message}
+        </AlertError>
+        <InputInform {...register('Username', {required: 'Username is required', minLength: {value: 10, message: 'It has to over 10 words'}})}
+          placeholder='Username' />
+        <AlertError>
+          {errors.Username?.message}
+        </AlertError>
+        <InputInform {...register('Password', {required: "Password is required", minLength: {value: 5, message: 'It has to over 5 words'}})} 
+          placeholder='Password' />
+        <AlertError>
+          {errors.Password?.message}
+        </AlertError>
+        <InputInform {...register('Password1', {required: "Password2 is required", minLength: {value: 5, message: 'It has to over 5 words'}})} 
+          placeholder='Password1' />
+        <AlertError>
+          {errors.Password1?.message}
+        </AlertError>
+        <button style={{marginTop: '10px'}}>Add</button>
+      </Form>
+    </Container>
   );
 };
 
