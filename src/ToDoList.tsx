@@ -52,12 +52,17 @@ interface IForm {
   LastName: string;
   Username: string;
   Password: string;
-  Password1: string;
+  PasswordCheck: string;
+  extraErrors?: string;
 }
 const ToDoList = () => {
-  const {register, handleSubmit, formState:{errors}} = useForm<IForm>({defaultValues: {Email: '@naver.com'}});
+  const {register, handleSubmit, formState:{errors}, setError}  = useForm<IForm>({defaultValues: {Email: '@naver.com'}});
   const onValid = (data: IForm) => {
-    console.log(data);
+    if(data.Password !== data.PasswordCheck) {
+      setError('PasswordCheck', {message: 'Password is not same'}, {shouldFocus: true});
+      
+    }
+    // setError('extraErrors', {message: 'Server offline'});
   }
   console.log(errors);
   return (
@@ -80,22 +85,25 @@ const ToDoList = () => {
         <AlertError>
           {errors.LastName?.message}
         </AlertError>
-        <InputInform {...register('Username', {required: 'Username is required', minLength: {value: 10, message: 'It has to over 10 words'}})}
+        <InputInform {...register('Username', {required: 'Username is required', minLength: {value: 5, message: 'It has to over 5 words'}})}
           placeholder='Username' />
-        <AlertError>
+        <AlertError> 
           {errors.Username?.message}
         </AlertError>
-        <InputInform {...register('Password', {required: "Password is required", minLength: {value: 5, message: 'It has to over 5 words'}})} 
+        <InputInform type='password' {...register('Password', {required: "Password is required", minLength: {value: 5, message: 'It has to over 5 words'}})} 
           placeholder='Password' />
         <AlertError>
           {errors.Password?.message}
         </AlertError>
-        <InputInform {...register('Password1', {required: "Password2 is required", minLength: {value: 5, message: 'It has to over 5 words'}})} 
-          placeholder='Password1' />
+        <InputInform type='password' {...register('PasswordCheck', {required: 'Check is required'})} 
+          placeholder='Password Check' />
         <AlertError>
-          {errors.Password1?.message}
+          {errors.PasswordCheck?.message}
         </AlertError>
         <button style={{marginTop: '10px'}}>Add</button>
+        <AlertError>
+          {errors.extraErrors?.message}
+        </AlertError>
       </Form>
     </Container>
   );
