@@ -75,7 +75,14 @@ const ToDoList = () => {
           {errors.Email?.message}
         </AlertError>
         <InputInform
-          {...register('FirstName', {required: 'First Name is required'})}  
+          {...register(
+            'FirstName', 
+            {required: 'First Name is required', 
+            validate: {
+              noNico : value => !value.includes('nico') || 'you can\'t use keyword nico',
+              noNick : value => !value.includes('nick') || 'you can\'t use keyword nick'
+            }})
+          }  
           placeholder='First Name' />
         <AlertError>
           {errors.FirstName?.message}
