@@ -1,6 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import ToDoList from './ToDoList';
+import HookForm from './HookForm';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -62,7 +62,7 @@ function App() {
   return (
     <>
       <GlobalStyle/>
-      <ToDoList/>
+      <HookForm/>
     </>
   );
 }

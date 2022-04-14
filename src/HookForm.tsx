@@ -29,6 +29,7 @@ import styled from 'styled-components';
 //   );
 // };
 // export default ToDoList;
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -55,7 +56,7 @@ interface IForm {
   PasswordCheck: string;
   extraErrors?: string;
 }
-const ToDoList = () => {
+const HookForm = () => {
   const {register, handleSubmit, formState:{errors}, setError}  = useForm<IForm>({defaultValues: {Email: '@naver.com'}});
   const onValid = (data: IForm) => {
     if(data.Password !== data.PasswordCheck) {
@@ -116,4 +117,4 @@ const ToDoList = () => {
   );
 };
 
-export default ToDoList;
+export default HookForm;
