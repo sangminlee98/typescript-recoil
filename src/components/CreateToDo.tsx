@@ -7,12 +7,12 @@ import { toDoState } from '../atoms/toDoState';
 const ErrorMessage = styled.span`
   margin-left: 1em;
   font-size: 0.8rem;
-  color: ${props => props.theme.accentColor}
+  color: ${props => props.theme.accentColor};
 `;
 
 interface IForm {
   toDo: string;
-}
+};
 
 const CreateToDo = () => {
   const setToDos = useSetRecoilState(toDoState);
