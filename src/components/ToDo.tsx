@@ -23,18 +23,8 @@ const Button = styled.button`
   }
 `;
 
-const DeleteButton = styled.button`
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 0.8rem;
+const DeleteButton = styled(Button)`
   color: red;
-  background-color: transparent;
-  transition: all .2s ease-in;
-  &:hover {
-    opacity: 0.8;
-    transform: scale(1.1);
-  }
 `;
 
 const ToDo = ({text, category, id}: IToDo) => {
