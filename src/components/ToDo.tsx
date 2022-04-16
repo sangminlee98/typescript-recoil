@@ -26,20 +26,8 @@ const Button = styled.button`
 const ToDo = ({text, category, id}: IToDo) => {
   const setToDos = useSetRecoilState(toDoState);
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const {currentTarget:{name}} = e;
-    switch(name) {
-      case 'TO_DO':
-        setToDos(prev => prev.map(toDo => toDo.id === id ? {...toDo, category: name} : toDo));
-        break;
-      case 'DOING':
-        setToDos(prev => prev.map(toDo => toDo.id === id ? {...toDo, category: name} : toDo));
-        break;
-      case 'DONE':
-        setToDos(prev => prev.map(toDo => toDo.id === id ? {...toDo, category: name} : toDo));
-        break;
-      default:
-        throw new Error('this category is not exist');
-    }
+    const name = e.currentTarget.name as IToDo['category'];
+    setToDos(prev => prev.map(toDo => toDo.id === id ? {...toDo, category: name} : toDo));
   }
   return (
     <li>
