@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { IToDo, toDoState } from '../atoms/toDoState';
+import { Categories, IToDo, toDoState } from '../atoms/toDoState';
 
 const Text = styled.span`
   font-size: 1.5rem;
@@ -26,15 +26,15 @@ const Button = styled.button`
 const ToDo = ({text, category, id}: IToDo) => {
   const setToDos = useSetRecoilState(toDoState);
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const name = e.currentTarget.name as IToDo['category'];
+    const name = e.currentTarget.name as any;
     setToDos(prev => prev.map(toDo => toDo.id === id ? {...toDo, category: name} : toDo));
   }
   return (
     <li>
       <Text>{text}</Text>
-      {category !== 'TO_DO' && <Button name='TO_DO' onClick={onClick}>To Do</Button>}
-      {category !== 'DOING' && <Button name='DOING' onClick={onClick}>Doing</Button>}
-      {category !== 'DONE' && <Button name='DONE' onClick={onClick}>Done</Button>}
+      {category !== Categories.TO_DO && <Button name={Categories.TO_DO} onClick={onClick}>To Do</Button>}
+      {category !== Categories.DOING && <Button name={Categories.DOING} onClick={onClick}>Doing</Button>}
+      {category !== Categories.DONE && <Button name={Categories.DONE} onClick={onClick}>Done</Button>}
     </li>
   );
 };

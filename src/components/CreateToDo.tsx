@@ -22,7 +22,6 @@ const CreateToDo = () => {
     setToDos(prev => [...prev, {text: toDo, id: Date.now(), category}]);
     setValue('toDo', '');
   }
-  
   return (
     <form onSubmit={handleSubmit(handleValid, () => console.log('error'))} autoComplete='off'>
       <input {...register('toDo', {required: 'please write a To Do'})} placeholder='Write a to do' />
