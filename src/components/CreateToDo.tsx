@@ -20,6 +20,7 @@ const CreateToDo = () => {
   const {register, handleSubmit, formState:{errors}, setValue} = useForm<IForm>();
   const handleValid = ({toDo}: IForm) => {
     setToDos(prev => [...prev, {text: toDo, id: Date.now(), category}]);
+    localStorage.setItem('toDos', '1');
     setValue('toDo', '');
   }
   return (
